@@ -2,14 +2,30 @@ import {Link} from 'react-router-dom';
 
 const Adminheader = () =>{
     return(
-        <ul>
-            <li><Link to='/'>Dashboard</Link></li>
-            <li><Link to='/addproduct'>New Product</Link></li>
-            <li><Link to='/productlist'>All Product</Link></li>
-            <li><Link to='/orderlist'>All Orders</Link></li>
-            <li> <a>Welcome - Alex - Logout</a> </li>
-        </ul>
+        <div className='container mt-3 mb-5'>
+            <div className='row'>
+                <div className='col-lg-4'>
+                    <h1 className='text-primary text-center'>
+                        React Shopping App
+                    </h1>
+                </div>
+                <div className='col-lg-8 text-end'>
+                    <div className='btn-group'>
+                        <Link className='btn btn-primary' to='/'><i className='fa fa-home'></i> Dashboard</Link>
+                        <Link className='btn btn-info text-white' to='/addproduct'><i className='fa fa-plus'></i> New Inventory </Link>
+                        <Link className='btn btn-success' to='/register'><i className='fa fa-user-plus'></i> My Inventory</Link>
+                        <Link className='btn btn-warning text-white' to='/orderlist'><i className='fa fa-headset'></i>Order List</Link>
+                        <button className='btn btn-danger' onClick={logout}>Welcome - {localStorage.getItem("sellername")} - Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
 export default Adminheader;
+
+const logout = () =>{
+    localStorage.clear();
+    window.location.reload();
+}

@@ -1,0 +1,14 @@
+{
+	"account" : [
+		{
+			"name" : "Ganesh",
+			"mobile" : "9879879799",
+			"email" : "s1@gmail.com",
+			"password" : "123",
+			"id" : 1
+		}
+	],
+	"product": [],
+	"cart": [],
+	"order": []
+}
