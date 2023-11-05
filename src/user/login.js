@@ -9,14 +9,14 @@ const Mylogin = () => {
         if(e=="" || p==""){
             swal("Error", "Empty Email or Password", "warning");
         } else {
-            const url = 'http://localhost:1234/account?email='+e+'&password='+p;
-            fetch(url)
+            const url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/account?email="+e+"&password="+p;
+            fetch(url) 
             .then(response=>response.json())
             .then((userinfo)=>{
                 if(userinfo.length == 0){
                     swal("Fail", "Invalid or not exists", "error");
                 } else {
-                    localStorage.setItem("sellerid", userinfo[0].id);
+                    localStorage.setItem("sellerid", userinfo[0].id); // standard cookies
                     localStorage.setItem("sellername", userinfo[0].name);
                     window.location.reload();
                 }
@@ -36,7 +36,7 @@ const Mylogin = () => {
                             <div className="mb-3">
                                 <label>Email Id</label>
                                 <input type="email" className="form-control" 
-                                onChange={obj=>{pickEmail(obj.target.value)}} value={e}/>
+                                onChange={obj=>pickEmail(obj.target.value)} value={e}/>
                             </div>
                             <div className="mb-3">
                                 <label>Password</label>

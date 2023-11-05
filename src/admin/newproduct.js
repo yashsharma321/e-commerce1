@@ -1,5 +1,4 @@
 import { useState } from "react"; 
-import { json } from "react-router-dom";
 import swal from "sweetalert";
 
  const Mynewproduct = () =>{
@@ -8,13 +7,25 @@ import swal from "sweetalert";
     let[pphoto, pickPhoto] = useState("");
     let[pdetails, pickDetails] = useState("");
 
-    let[errorList, updateError] = useState({nameerror: "", priceerror:"",photoerror: "", detailserror:""});
+    let[errorList, updateError] = useState([{
+        nameerror: "", 
+        priceerror: "",
+        photoerror: "", 
+        detailserror:""
+    }]);
 
     const save = () => {
+        let formstatus = true;
+        if(pname==""){
+            errorList[0].nameerror = "Invalid Name !";
+            formstatus = false;
+        } else {
+            errorList[0].nameerror="";
+        }
 
         // price check
-        if( isNaN(parent(pprice))) {
-            errorList[0].priceerror = "Invalid Photo URL";
+        if(isNaN(parseInt(pprice))) {
+            errorList[0].priceerror = "Invalid Product Price !";
             formstatus = false;
         } else {
             errorList[0].priceerror = "";
@@ -22,7 +33,7 @@ import swal from "sweetalert";
 
         // photo url check
         if(pphoto == ""){
-            errorList[0].photoerror = "Invalid Photo URL";
+            errorList[0].photoerror = "Invalid Photo URL !";
             formstatus = false;
         } else {
             errorList[0].photoerror = "";
@@ -30,34 +41,18 @@ import swal from "sweetalert";
 
         // details check
         if(pdetails == ""){
-            errorList[0].detailserror = "Enter Product Details!";
+            errorList[0].detailserror = "Enter Product Details !";
             formstatus = false;
         } else {
             errorList[0].detailserror = "";
         }
 
-
-
-
-        let formstatus = true;
-        if(pname==""){
-            errorList.nameerror = "Invalid Name!";
-            formstatus = false;
-        } else {
-
-            
-
-
-            errorList.nameerror="";
-        }
         
-        
-        updateError(errorList = [...errorList]);
+        updateError([...errorList]); // update error message in state
         if(formstatus == false){
             swal("Error", "Enter Product Details", "warning");
         } else {
-
-            let url = "http://localhost:1234/product";
+            let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product";
             let newproduct = {
                 name: pname,
                 price: pprice,
@@ -65,7 +60,6 @@ import swal from "sweetalert";
                 details: pdetails,
                 sellerid: localStorage.getItem("sellerid")
             }
-
             let postdata = {
                 headers : {'Content-Type' : 'application/json'},
                 method : 'POST',
@@ -78,11 +72,8 @@ import swal from "sweetalert";
                 swal(pname+"", " Save Successfully ", "success");
                 pickName(""); pickDetails(""); pickPhoto(""); pickPrice("");
             })
-
-            alert("Please wait saving...");
-        }
-    }
-
+        } // else end
+    } 
 
     return(
         <div className="container">
@@ -95,33 +86,37 @@ import swal from "sweetalert";
                         <div className="col-lg-6">
                             <label>Enter Product Name</label>
                             <input type="text" className="form-control"
-                            onChange={(obj)=>pickName(obj.target.pname)} value={pname} />
+                            onChange={obj=>pickName(obj.target.value)} value={pname} />
                             <i className="text-danger">{errorList[0].nameerror}</i>
                         </div>
                         <div className="col-lg-6">
                             <label>Enter Product Price</label>
                             <input type="number" className="form-control"
-                            onChange={(obj)=>pickPrice(obj.target.pprice)} value={pprice} />
+                            onChange={obj=>pickPrice(obj.target.value)} value={pprice} />
+                            <i className="text-danger">{errorList[0].priceerror}</i>
                         </div>
                     </div>
                     
                     <div className="row mb-4">
                         <div className="col-lg-12">
                             <label>Enter Product Photo URL</label>
-                            <input type="number" className="form-control"
-                            onChange={(obj)=>pickPhoto(obj.target.pphoto)} value={pphoto} />
+                            <input type="text" className="form-control"
+                            onChange={obj=>pickPhoto(obj.target.value)} value={pphoto} />
+                            <i className="text-danger">{errorList[0].photoerror}</i>
                         </div>
                     </div>
                     
                     <div className="row mb-4">
                         <div className="col-lg-12">
                             <label>Enter Product Details</label>
-                            <textarea className="form-control" onChange={(obj)=>pickDetails(obj.target.pdetails)} value={pdetails} ></textarea>
+                            <textarea className="form-control" 
+                            onChange={obj=>pickDetails(obj.target.value)} value={pdetails} ></textarea>
+                            <i className="text-danger">{errorList[0].detailserror}</i>
                         </div>
                     </div>
 
                     <div className="text-center">
-                        <button className="btn btn-danger"> Update Product </button>
+                        <button className="btn btn-danger" onClick={save}> Update Product </button>
                     </div>
                 </div>
                 <div className="col-lg-2"></div>

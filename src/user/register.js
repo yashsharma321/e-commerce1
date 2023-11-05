@@ -8,7 +8,7 @@ const Myregister = () => {
     let[password, pickPassword] = useState("");
 
     const save = () => {
-        const url = 'http://localhost:1234/account';
+        const url = 'https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/account';
         let userinfo = {name: fullname, mobile: mobile, email: email, password: password};
         let postData = {
             headers: {'Content-Type': 'application/json'},
@@ -16,15 +16,14 @@ const Myregister = () => {
             body: JSON.stringify(userinfo)
         };
         fetch(url, postData)
-        .then(response=>response.json)
+        .then(response=>response.json())
         .then((userData)=>{
-            swal("Seller ," + fullname, " Account created successfully", "success");
+            swal("Seller," + fullname, " Account created successfully", "success");
             pickName("");
             pickMobile("");
             pickEmail("");
             pickPassword("");
         })
-        alert(fullname + mobile + email + password);
     }
     
 

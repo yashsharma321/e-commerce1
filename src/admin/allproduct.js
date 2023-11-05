@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
  const Myproduct = () =>{
     let[allproduct, updateProduct] = useState([]);
     const getProduct = () => {
-        let url = "http://localhost:1234/product";
+        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product";
         fetch(url)
         .then(response=>response.json())
         .then((productArray)=>{
