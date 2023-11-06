@@ -69,7 +69,7 @@ import swal from "sweetalert";
             fetch(url, postdata)
             .then(response=>response.json())
             .then(serRes=>{
-                swal(pname+"", " Save Successfully ", "success");
+                swal(pname+"", "Save Successfully.", "success");
                 pickName(""); pickDetails(""); pickPhoto(""); pickPrice("");
             })
         } // else end

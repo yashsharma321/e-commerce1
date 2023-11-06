@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"; 
+import swal from "sweetalert";
 
  const Myproduct = () =>{
     let[allproduct, updateProduct] = useState([]);
@@ -14,6 +15,21 @@ import { useEffect, useState } from "react";
     useEffect(()=>{
         getProduct()
     }, [1]);
+    
+    const deleteProduct = (sellerid, name) => {
+        let url = `https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product/${sellerid}`;
+        
+        let postoption = {
+            headers: {'Content-Type': 'application/json'},
+            method : 'DELETE'
+        }
+        fetch(url, postoption)
+        .then(response=>response.json())
+        .then((productArray)=>{
+            swal(name, "Deleted success!", "success");
+            getProduct();
+        })
+    }
 
     return(
         <div className="container mt-4">
@@ -48,7 +64,7 @@ import { useEffect, useState } from "react";
                                             <td>{product.details}</td>
                                             <td><img src={product.photo} height="50" width="70"/></td>
                                             <td>
-                                                <button className="btn btn-danger btn-sm">
+                                                <button onClick={deleteProduct.bind(this, product.id, product.name)} className="btn btn-danger btn-sm">
                                                     <i className="fa fa-trash"></i>
                                                 </button>
                                             </td>

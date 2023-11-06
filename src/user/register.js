@@ -18,7 +18,7 @@ const Myregister = () => {
         fetch(url, postData)
         .then(response=>response.json())
         .then((userData)=>{
-            swal("Seller," + fullname, " Account created successfully", "success");
+            swal("Seller, " + fullname, "Account created successfully.", "success");
             pickName("");
             pickMobile("");
             pickEmail("");

@@ -6,13 +6,35 @@
       "email": "s1@gmail.com",
       "password": "123",
       "id": 1
+    },
+    {
+      "name": "a",
+      "mobile": "123",
+      "email": "y@h.com",
+      "password": "qwerty@123",
+      "id": 2
+    },
+    {
+      "name": "YAsh",
+      "mobile": "123",
+      "email": "a@a.com",
+      "password": "123",
+      "id": 3
     }
   ],
   "product": [
     {
       "name": "HP Laptop",
-      "price": "49000",
-      "photo": "https://hp.com/laptop/acees/hdjhehd/293892/29739djw/jgu2g8/1.jpg",
+      "price": "Rs. 49000",
+      "photo": "https://picsum.photos/seed/picsum/200/300",
+      "details": "Wonderful laptop",
+      "sellerid": "3",
+      "id": 3
+    },
+    {
+      "name": "HP Desktop",
+      "price": "Rs. 67000",
+      "photo": "https://picsum.photos/seed/picsum/200/300",
       "details": "Wonderful laptop",
       "sellerid": "1",
       "id": 1
