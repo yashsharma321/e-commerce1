@@ -1,20 +1,34 @@
 import { useEffect, useState } from "react"; 
 import swal from "sweetalert";
+import ReactPaginate from 'react-paginate';
 
  const Myproduct = () =>{
     let[allproduct, updateProduct] = useState([]);
-    const getProduct = () => {
-        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product";
-        fetch(url)
+    const getProduct = async () => {
+        let sellerid = localStorage.getItem("sellerid");
+        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product?sellerid="+sellerid;
+        await fetch(url)
         .then(response=>response.json())
         .then((productArray)=>{
-            updateProduct(productArray.reverse())
+            updateProduct(productArray.reverse());
         })
     }
 
     useEffect(()=>{
         getProduct()
     }, [1]);
+
+    //for search
+    let[keyword, pickKeyword] = useState("");
+
+    //pagination start
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected : selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(allproduct.length / PER_PAGE);
     
     const deleteProduct = (sellerid, name) => {
         let url = `https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product/${sellerid}`;
@@ -35,11 +49,11 @@ import swal from "sweetalert";
         <div className="container mt-4">
             <div className="row">
                 <div className="col-lg-8">
-                    <h3 className="text-primary text-center"> Product List </h3>
+                    <h3 className="text-primary text-center"> {allproduct.length} : Product List </h3>
                 </div>
                 <div className="col-lg-4">
                     <i>Search..</i>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" onChange={obj=>pickKeyword(obj.target.value)} value={keyword}/>
                 </div>
                 <div className="col-lg-12 mt-4">
                     <table className="table">
@@ -55,25 +69,51 @@ import swal from "sweetalert";
                         </thead>
                         <tbody>
                             {
-                                allproduct.map((product, index)=>{
-                                    return(
-                                        <tr key={index}>
-                                            <td>{product.id}</td>
-                                            <td>{product.name}</td>
-                                            <td>{product.price}</td>
-                                            <td>{product.details}</td>
-                                            <td><img src={product.photo} height="50" width="70"/></td>
-                                            <td>
-                                                <button onClick={deleteProduct.bind(this, product.id, product.name)} className="btn btn-danger btn-sm">
-                                                    <i className="fa fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )
+                                allproduct.slice(offset, offset + PER_PAGE).map((product, index)=>{
+                                    if (product.name.toLowerCase().includes(keyword.toLowerCase()))
+                                    {
+                                        return(
+                                            <tr key={index}>
+                                                <td>{product.id}</td>
+                                                <td>{product.name}</td>
+                                                <td>Rs. {product.price}</td>
+                                                <td>{product.details}</td>
+                                                <td><img src={product.photo} height="50" width="70"/></td>
+                                                <td>
+                                                    <button onClick={deleteProduct.bind(this, product.id, product.name)} className="btn btn-danger btn-sm">
+                                                        <i className="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                 })
                             }
                         </tbody>
                     </table>
+
+                    <div className="mb-4 mt-4">
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active primary"}
+                        />
+                    </div>
+
                 </div>
             </div>
         </div>
