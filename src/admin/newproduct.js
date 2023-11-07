@@ -52,7 +52,7 @@ import swal from "sweetalert";
         if(formstatus == false){
             swal("Error", "Enter Product Details", "warning");
         } else {
-            let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product";
+            let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/product";
             let newproduct = {
                 name: pname,
                 price: pprice,

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
     let[allproduct, updateProduct] = useState([]);
     const getProduct = async () => {
         let sellerid = localStorage.getItem("sellerid");
-        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product?sellerid="+sellerid;
+        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/product?sellerid="+sellerid;
         await fetch(url)
         .then(response=>response.json())
         .then((productArray)=>{

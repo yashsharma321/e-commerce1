@@ -9,7 +9,7 @@ const Mylogin = () => {
         if(e=="" || p==""){
             swal("Error", "Empty Email or Password.", "warning");
         } else {
-            const url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/account?email="+e+"&password="+p;
+            const url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/account?email="+e+"&password="+p;
             fetch(url) 
             .then(response=>response.json())
             .then((userinfo)=>{

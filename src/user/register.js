@@ -8,7 +8,7 @@ const Myregister = () => {
     let[password, pickPassword] = useState("");
 
     const save = () => {
-        const url = 'https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/account';
+        const url = 'https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/account';
         let userinfo = {name: fullname, mobile: mobile, email: email, password: password};
         let postData = {
             headers: {'Content-Type': 'application/json'},

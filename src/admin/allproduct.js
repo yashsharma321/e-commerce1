@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
     let[allproduct, updateProduct] = useState([]);
     const getProduct = async () => {
         let sellerid = localStorage.getItem("sellerid");
-        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product?sellerid="+sellerid;
+        let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/product?sellerid="+sellerid;
         await fetch(url)
         .then(response=>response.json())
         .then((productArray)=>{
@@ -31,7 +31,7 @@ import ReactPaginate from 'react-paginate';
     const pageCount = Math.ceil(allproduct.length / PER_PAGE);
     
     const deleteProduct = (sellerid, name) => {
-        let url = `https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us105.gitpod.io/product/${sellerid}`;
+        let url = `https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/product/${sellerid}`;
         
         let postoption = {
             headers: {'Content-Type': 'application/json'},
