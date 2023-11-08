@@ -7,11 +7,16 @@ import ReactPaginate from 'react-paginate';
     const getProduct = async () => {
         let sellerid = localStorage.getItem("sellerid");
         let url = "https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/product?sellerid="+sellerid;
-        await fetch(url)
-        .then(response=>response.json())
-        .then((productArray)=>{
-            updateProduct(productArray.reverse());
-        })
+        try{
+            await fetch(url)
+            .then(response=>response.json())
+            .then((productArray)=>{
+                updateProduct(productArray.reverse());
+            })
+        } 
+        catch (error){
+            swal("Error", "Error while fatching the data", "error");
+        }
     }
 
     useEffect(()=>{
@@ -113,7 +118,6 @@ import ReactPaginate from 'react-paginate';
                             activeClassName={"active primary"}
                         />
                     </div>
-
                 </div>
             </div>
         </div>
