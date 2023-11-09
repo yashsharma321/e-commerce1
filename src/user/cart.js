@@ -60,30 +60,67 @@ const Mycart = () => {
     let [mobileno, pickMobile] = useState("");
     let [fulladdress, pickAddress] = useState("");
 
+    // for validation
+    let [nameError, updateNameError] = useState("");
+    let [mobileError, updateMobileError] = useState("");
+    let [addressError, updateAddressError] = useState("");
+
     const placeorder = async () => {
-        let orderdata = {
-            customername : fullname, 
-            mobile : mobileno, 
-            address : fulladdress,
-            item : allproduct
-        };
-       
-        let url = 'https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/order';
-        let postData = {
-            headers : {'Content-Type' : 'application/json'},
-            method : "POST",
-            body : JSON.stringify(orderdata)
+        let formStatus = true;
+        
+        if(fullname == ""){
+            formStatus = false;
+            updateNameError("Invalid Name !");
+        } else {
+            updateNameError("");
         }
-        try{
-            await fetch(url, postData)
-            .then(response=>response.json())
-            .then(serverRes=>{
-                swal("Order Received", "Your Order id -: "+serverRes.id, "success" );
-                pickName(""); pickMobile(""); pickAddress(""); updateProduct([]);
-            })
+
+        var mpattern = /^[0]?[6789]\d{9}$/;
+        if( ! mpattern.test(mobileno) ){
+            formStatus = false;
+            updateMobileError("Invalid Mobile !");
+        } else {
+            updateMobileError("");
         }
-        catch(error){
-            swal("error", "Unalble to place order.", "error");
+
+        if(fulladdress == ""){
+            formStatus = false;
+            updateAddressError("Invalid Address !");
+        } else {
+            updateAddressError("");
+        }
+
+        if(allproduct.length == 0){
+            formStatus = false;
+        }
+
+        if(formStatus == true){
+            let orderdata = {
+                customername : fullname, 
+                mobile : mobileno, 
+                address : fulladdress,
+                item : allproduct
+            };
+        
+            let url = 'https://1234-yashsharma32-ecommerce1-yzzh7hhgdye.ws-us106.gitpod.io/order';
+            let postData = {
+                headers : {'Content-Type' : 'application/json'},
+                method : "POST",
+                body : JSON.stringify(orderdata)
+            }
+            try{
+                await fetch(url, postData)
+                .then(response=>response.json())
+                .then(serverRes=>{
+                    swal("Order Received", "Your Order id -: "+serverRes.id, "success" );
+                    pickName(""); pickMobile(""); pickAddress(""); updateProduct([]);
+                })
+            }
+            catch(error){
+                swal("error", "Unalble to place order.", "error");
+            }
+        } else {
+            swal("Input Error", "Please Enter Customer Details", "warning");
         }
     }
 
@@ -99,16 +136,19 @@ const Mycart = () => {
                             <label>Customer Name</label>
                             <input type="text" className="form-control"
                             onChange={obj=>pickName(obj.target.value)} value={fullname}/>
+                            <small className="text-danger">{nameError}</small>                            
                         </div>
                         <div className="mb-3">
                             <label>Mobile No</label>
                             <input type="text" className="form-control" 
                             onChange={obj=>pickMobile(obj.target.value)} value={mobileno}/>
+                            <small className="text-danger">{mobileError}</small>
                         </div>
                         <div className="mb-3">
                             <label>Delivery Address</label>
                             <textarea className="form-control" 
                             onChange={obj=>pickAddress(obj.target.value)} value={fulladdress}></textarea>
+                            <small className="text-danger">{addressError}</small>
                         </div>
                         <div className="text-center">
                             <hr/>
@@ -157,7 +197,7 @@ const Mycart = () => {
                                 })
                             }
                             <tr>
-                                <td colspan="5" className="text-end">
+                                <td colSpan="5" className="text-end">
                                     <b> Grand Total : Rs.{total} </b>
                                 </td>
                                 <td></td>
