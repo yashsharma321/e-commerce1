@@ -5,6 +5,7 @@ import Myregister from "./register";
 import Mylogin from "./login";
 import Mycart from "./cart";
 import Myhome from "./home";
+import Footer from "./footer";
 
 const UserModule = () =>{
     return(
@@ -18,6 +19,7 @@ const UserModule = () =>{
                 <Route exact path='/cart' element= {<Mycart />} />
                 <Route exact path='/home' element= {<Myhome />} />
             </Routes>
+            <Footer />
         </HashRouter>
     )
 }
